@@ -1,12 +1,12 @@
 import { EComponentKind, T4DComponentConfig } from '@ws-ui/webform-editor';
 import { Settings } from '@ws-ui/webform-editor';
-import { BsSoundwave } from "react-icons/bs";
+import { MdOutlineTextSnippet } from 'react-icons/md';
 
-import AudioPlayerSettings, { BasicSettings } from './AudioPlayer.settings';
+import VideoPlayerSettings, { BasicSettings } from './VideoPlayer.settings';
 
 export default {
   craft: {
-    displayName: 'AudioPlayer',
+    displayName: 'VideoPlayer',
     kind: EComponentKind.BASIC,
     props: {
       name: '',
@@ -14,13 +14,13 @@ export default {
       events: [],
     },
     related: {
-      settings: Settings(AudioPlayerSettings, BasicSettings),
+      settings: Settings(VideoPlayerSettings, BasicSettings),
     },
   },
   info: {
-    displayName: 'AudioPlayer',
+    displayName: 'VideoPlayer',
     exposed: true,
-    icon: BsSoundwave,
+    icon: MdOutlineTextSnippet,
     events: [
       {
         label: 'On Click',
@@ -56,16 +56,15 @@ export default {
     },
   },
   defaultProps: {
-    loop:false,
-    muted:false,
-    autoPlay:false,
+    autoPlay: false,
+    muted: false,
+    loop: false,
   },
-} as T4DComponentConfig<IAudioPlayerProps>;
+} as T4DComponentConfig<IVideoPlayerProps>;
 
-export interface IAudioPlayerProps extends webforms.ComponentProps {
-autoPlay:boolean,
-muted:boolean,
-loop:boolean,
-audioSource:string
-
+export interface IVideoPlayerProps extends webforms.ComponentProps {
+  autoPlay: boolean;
+  muted: boolean;
+  loop: boolean;
+  audioSource: string;
 }

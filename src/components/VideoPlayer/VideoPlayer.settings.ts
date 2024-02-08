@@ -16,17 +16,16 @@ const commonSettings: TSetting[] = [
   },
   {
     key: 'autoPlay',
-    label: 'Auto Play',
+    label: 'Auto play',
     type: ESetting.CHECKBOX,
     defaultValue: false,
-  }
-  ,
+  },
   {
     key: 'audioSource',
     label: 'Audio source',
     type: ESetting.TEXT_FIELD,
     defaultValue: "",
-  }
+  },
 ];
 
 const Settings: TSetting[] = [
