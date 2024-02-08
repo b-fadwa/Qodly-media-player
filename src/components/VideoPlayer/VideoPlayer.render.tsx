@@ -9,12 +9,15 @@ import {
   BsPauseFill,
   BsFillVolumeMuteFill,
   BsFillVolumeDownFill,
+  BsFullscreen,
+  BsThreeDotsVertical,
 } from 'react-icons/bs';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
   autoPlay,
   muted,
   loop,
+  videoSource,
   style,
   className,
   classNames = [],
@@ -26,9 +29,10 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressBarRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>(videoSource);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [prevVolume, setPrevVolume] = useState<number>(60); //get the previous audio volume
   const [volume, setVolume] = useState(60);
@@ -39,7 +43,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
 
     const listener = async (/* event */) => {
       const v = await ds.getValue<string>();
-      setValue(v);
+      setValue(v || videoSource);
     };
 
     listener();
@@ -50,6 +54,28 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
       ds.removeListener('changed', listener);
     };
   }, [ds]);
+
+  useEffect(() => {
+    const handleLoadedMetadata = () => {
+      if (videoRef.current) {
+        setCurrentTime(videoRef.current.currentTime);
+        // Update duration in state once metadata is loaded
+        if (videoRef.current.duration) {
+          setDuration(videoRef.current.duration);
+        }
+      }
+    };
+
+    if (videoRef.current) {
+      videoRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      }
+    };
+  }, []);
 
   //playPause button
   const playPauseVideo = () => {
@@ -80,9 +106,26 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const ProgressBar = () => {
     return (
       <div className={cn('player-progress', 'grow gap-1')}>
-        <input className={cn('player-input', 'w-full')} type="range" min="0" max="100" />
+        <input
+          className={cn('player-input', 'w-full')}
+          type="range"
+          ref={progressBarRef}
+          defaultValue={currentTime}
+          onChange={handleProgressChange}
+          step="0.01"
+          min="0"
+          max={videoRef.current?.duration}
+        />
       </div>
     );
+  };
+
+  const handleProgressChange = () => {
+    if (videoRef.current && progressBarRef.current) {
+      const newTime = parseFloat(progressBarRef.current.value);
+      setCurrentTime(newTime);
+      videoRef.current.currentTime = newTime;
+    }
   };
 
   const handleTimeUpdate = () => {
@@ -180,6 +223,8 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
       if (hours === 0) return `${minutes}min ${seconds}s`;
       if (minutes === 0) return `${seconds}s`;
       if (seconds === 0) return `${hours}h ${minutes}min`;
+    } else {
+      return '0s';
     }
   }
 
@@ -187,13 +232,37 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const DurationDiv = () => {
     return (
       <div className={cn('duration-container', 'p-2 w-50')}>
-        {/* {videoRef? formatTime(Math.floor(currentTime))/videoRef.current ? formatTime(videoRef.current?.duration):'00:00'} */}
-        {formatTime(Math.floor(currentTime))} /{videoRef.current ? formatTime(videoRef.current?.duration) : '00:00'}
+        {formatTime(Math.floor(currentTime))} / {formatTime(Math.floor(duration))}
       </div>
     );
   };
 
-  // console.log(videoRef);
+  const FullScreenButton = () => {
+    return (
+      <button
+        className={cn(
+          'player-fullscreen',
+          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+        )}
+      >
+        {<BsFullscreen />}
+      </button>
+    );
+  };
+
+  const OtherButtons = () => {
+    return (
+      <button
+        className={cn(
+          'player-fullscreen',
+          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+        )}
+      >
+        {<BsThreeDotsVertical />}
+      </button>
+    );
+  };
+
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
       <video
@@ -201,7 +270,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
         autoPlay={autoPlay}
         loop={loop}
         muted={muted}
-        className={cn('video-screen', 'w-full bg-slate-400 max-w-full max-h-full rounded-t-lg')}
+        className={cn('video-screen', 'w-full bg-slate-400 rounded-t-lg')}
         onTimeUpdate={handleTimeUpdate}
       >
         <source src={value} type="video/mp4" />
@@ -209,18 +278,16 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
         Your browser does not support the video element.
       </video>
       <div
-        style={style}
-        className={cn(
-          'player-container',
-          'flex rounded bg-gray-600 text-white text-xl rounded-b-lg',
-        )}
+        className={cn('player-container', 'flex rounded-b-lg bg-gray-600 text-white text-xl px-1')}
       >
         <VideoPlayPauseButton />
-        <div className={cn('player-container', 'flex grow items-center justify-center gap-2 p-2')}>
+        <div className={cn('player-container', 'flex grow items-center justify-center gap-2 p-1')}>
           <ProgressBar />
           <DurationDiv />
         </div>
         <VolumeInput />
+        <FullScreenButton />
+        <OtherButtons />
       </div>
     </div>
   );

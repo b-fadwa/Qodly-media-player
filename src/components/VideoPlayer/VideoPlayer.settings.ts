@@ -21,10 +21,10 @@ const commonSettings: TSetting[] = [
     defaultValue: false,
   },
   {
-    key: 'audioSource',
-    label: 'Audio source',
+    key: 'videoSource',
+    label: 'Video source',
     type: ESetting.TEXT_FIELD,
-    defaultValue: "",
+    defaultValue: '',
   },
 ];
 

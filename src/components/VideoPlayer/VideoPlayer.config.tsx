@@ -66,5 +66,5 @@ export interface IVideoPlayerProps extends webforms.ComponentProps {
   autoPlay: boolean;
   muted: boolean;
   loop: boolean;
-  audioSource: string;
+  videoSource: string;
 }

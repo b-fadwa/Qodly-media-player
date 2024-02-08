@@ -135,6 +135,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
           ref={progressBarRef}
           defaultValue={currentTime}
           onChange={handleProgressChange}
+          step="0.01"
           min="0"
           max={audioRef.current?.duration}
         />

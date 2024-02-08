@@ -3,7 +3,12 @@ import cn from 'classnames';
 import { FC } from 'react';
 
 import { IVideoPlayerProps } from './VideoPlayer.config';
-import { BsFillPlayFill, BsFillVolumeUpFill } from 'react-icons/bs';
+import {
+  BsFillPlayFill,
+  BsFillVolumeUpFill,
+  BsFullscreen,
+  BsThreeDotsVertical,
+} from 'react-icons/bs';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
   autoPlay,
@@ -23,7 +28,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
       <button
         className={cn(
           'player-start',
-          'p-2 m-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
         )}
       >
         {' '}
@@ -42,17 +47,43 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   //volume slider
   const VolumeInput = () => {
     return (
-      <div className={cn('player-volume-container ', 'flex group w-fit pr-4')}>
+      <div className={cn('player-volume-container', 'flex group w-fit pr-4')}>
         <button
           className={cn(
             'player-volume-button',
-            'items-center justify-center p-2 hover:bg-gray-400 block cursor-pointer relative  ',
+            'items-center justify-center p-2 hover:bg-gray-400 block cursor-pointer relative',
           )}
         >
           <BsFillVolumeUpFill />
         </button>
         <input type="range" min={0} max={100} className={cn('player-volume-range', 'w-fit')} />
       </div>
+    );
+  };
+
+  const FullScreenButton = () => {
+    return (
+      <button
+        className={cn(
+          'player-fullscreen',
+          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+        )}
+      >
+        {<BsFullscreen />}
+      </button>
+    );
+  };
+
+  const OtherButtons = () => {
+    return (
+      <button
+        className={cn(
+          'player-fullscreen',
+          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+        )}
+      >
+        {<BsThreeDotsVertical />}
+      </button>
     );
   };
 
@@ -75,15 +106,16 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
         Your browser does not support the video element.
       </video>
       <div
-        style={style}
-        className={cn('player-container', 'flex rounded-b-lg bg-gray-600 text-white text-xl')}
+        className={cn('player-container', 'flex rounded-b-lg bg-gray-600 text-white text-xl px-1')}
       >
         <VideoPlayPauseButton />
-        <div className={cn('player-container', 'flex grow items-center justify-center gap-2 p-2')}>
+        <div className={cn('player-container', 'flex grow items-center justify-center gap-2 p-1')}>
           <ProgressBar />
           <DurationDiv />
         </div>
         <VolumeInput />
+        <FullScreenButton />
+        <OtherButtons />
       </div>
     </div>
   );
