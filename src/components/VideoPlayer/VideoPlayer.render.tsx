@@ -10,8 +10,9 @@ import {
   BsFillVolumeMuteFill,
   BsFillVolumeDownFill,
   BsFullscreen,
-  BsThreeDotsVertical,
 } from 'react-icons/bs';
+
+import { RiPictureInPicture2Fill, RiSpeedUpFill } from 'react-icons/ri';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
   autoPlay,
@@ -181,7 +182,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
       <div
         className={cn(
           'player-volume-container ',
-          'flex justify-center items-center group w-fit rounded pr-4',
+          'flex justify-center items-center group w-fit rounded',
         )}
         onMouseLeave={handleMouseLeave}
       >
@@ -228,6 +229,18 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     }
   }
 
+  const toggleFullScreen = () => {
+    if (videoRef.current) {
+      videoRef.current.requestFullscreen();
+    }
+  };
+
+  const togglePictureInPicture = () => {
+    if (videoRef.current) {
+      videoRef.current.requestPictureInPicture();
+    }
+  };
+
   //duration div
   const DurationDiv = () => {
     return (
@@ -244,13 +257,28 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           'player-fullscreen',
           'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
         )}
+        onClick={toggleFullScreen}
       >
-        {<BsFullscreen />}
+        <BsFullscreen />
       </button>
     );
   };
 
-  const OtherButtons = () => {
+  const PictureInPictureButton = () => {
+    return (
+      <button
+        className={cn(
+          'player-fullscreen',
+          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+        )}
+        onClick={togglePictureInPicture}
+      >
+        <RiPictureInPicture2Fill />
+      </button>
+    );
+  };
+
+  const SpeedButton = () => {
     return (
       <button
         className={cn(
@@ -258,7 +286,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
         )}
       >
-        {<BsThreeDotsVertical />}
+        <RiSpeedUpFill />
       </button>
     );
   };
@@ -286,8 +314,9 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           <DurationDiv />
         </div>
         <VolumeInput />
+        <SpeedButton />
         <FullScreenButton />
-        <OtherButtons />
+        <PictureInPictureButton />
       </div>
     </div>
   );

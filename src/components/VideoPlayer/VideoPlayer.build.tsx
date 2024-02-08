@@ -3,12 +3,9 @@ import cn from 'classnames';
 import { FC } from 'react';
 
 import { IVideoPlayerProps } from './VideoPlayer.config';
-import {
-  BsFillPlayFill,
-  BsFillVolumeUpFill,
-  BsFullscreen,
-  BsThreeDotsVertical,
-} from 'react-icons/bs';
+import { BsFillPlayFill, BsFillVolumeUpFill, BsFullscreen } from 'react-icons/bs';
+
+import { RiPictureInPicture2Fill, RiSpeedUpFill } from 'react-icons/ri';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
   autoPlay,
@@ -47,7 +44,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   //volume slider
   const VolumeInput = () => {
     return (
-      <div className={cn('player-volume-container', 'flex group w-fit pr-4')}>
+      <div className={cn('player-volume-container', 'flex group w-fit')}>
         <button
           className={cn(
             'player-volume-button',
@@ -69,12 +66,12 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
         )}
       >
-        {<BsFullscreen />}
+        <BsFullscreen />
       </button>
     );
   };
 
-  const OtherButtons = () => {
+  const PictureInPictureButton = () => {
     return (
       <button
         className={cn(
@@ -82,7 +79,20 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
         )}
       >
-        {<BsThreeDotsVertical />}
+        <RiPictureInPicture2Fill />
+      </button>
+    );
+  };
+
+  const SpeedButton = () => {
+    return (
+      <button
+        className={cn(
+          'player-fullscreen',
+          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+        )}
+      >
+        <RiSpeedUpFill />
       </button>
     );
   };
@@ -114,8 +124,9 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           <DurationDiv />
         </div>
         <VolumeInput />
+        <SpeedButton />
         <FullScreenButton />
-        <OtherButtons />
+        <PictureInPictureButton />
       </div>
     </div>
   );
