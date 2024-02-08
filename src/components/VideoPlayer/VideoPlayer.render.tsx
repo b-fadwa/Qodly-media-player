@@ -38,6 +38,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const [prevVolume, setPrevVolume] = useState<number>(60); //get the previous audio volume
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     if (!ds) return;
@@ -176,6 +177,17 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     setIsInputVisible(false);
   };
 
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleSpeedChange = (speed: number) => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = speed;
+      toggleDropdown();
+    }
+  };
+
   //volume slider component
   const VolumeInput = () => {
     return (
@@ -280,14 +292,51 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
 
   const SpeedButton = () => {
     return (
-      <button
-        className={cn(
-          'player-fullscreen',
-          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+      <div className="relative">
+        <button
+          className={cn(
+            'player-fullscreen',
+            'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+          )}
+          onClick={toggleDropdown}
+        >
+          <RiSpeedUpFill />
+        </button>
+        {showDropdown && (
+          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2">
+            <button
+              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+              onClick={() => handleSpeedChange(0.25)}
+            >
+              0.25x
+            </button>
+            <button
+              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+              onClick={() => handleSpeedChange(0.5)}
+            >
+              0.5x
+            </button>
+            <button
+              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+              onClick={() => handleSpeedChange(1)}
+            >
+              1x
+            </button>
+            <button
+              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+              onClick={() => handleSpeedChange(1.5)}
+            >
+              1.5x
+            </button>
+            <button
+              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+              onClick={() => handleSpeedChange(2)}
+            >
+              2x
+            </button>
+          </div>
         )}
-      >
-        <RiSpeedUpFill />
-      </button>
+      </div>
     );
   };
 
