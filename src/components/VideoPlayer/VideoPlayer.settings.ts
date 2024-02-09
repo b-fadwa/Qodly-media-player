@@ -26,6 +26,23 @@ const commonSettings: TSetting[] = [
     type: ESetting.TEXT_FIELD,
     defaultValue: '',
   },
+  {
+    key: 'fullScreen',
+    label: 'Fullscreen mode',
+    type: ESetting.CHECKBOX,
+    defaultValue: false,
+  },  {
+    key: 'miniPlayer',
+    label: 'Miniplayer mode',
+    type: ESetting.CHECKBOX,
+    defaultValue: false,
+  },
+    {
+    key: 'speed',
+    label: 'Show speed',
+    type: ESetting.CHECKBOX,
+    defaultValue: false,
+  },
 ];
 
 const Settings: TSetting[] = [

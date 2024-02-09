@@ -11,6 +11,9 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   autoPlay,
   loop,
   muted,
+  miniPlayer,
+  fullScreen,
+  speed,
   style,
   className,
   classNames = [],
@@ -60,49 +63,61 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
 
   const FullScreenButton = () => {
     return (
-      <button
-        className={cn(
-          'player-fullscreen',
-          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+      <>
+        {fullScreen && (
+          <button
+            className={cn(
+              'player-fullscreen',
+              'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+            )}
+          >
+            <BsFullscreen />
+          </button>
         )}
-      >
-        <BsFullscreen />
-      </button>
+      </>
     );
   };
 
   const PictureInPictureButton = () => {
     return (
-      <button
-        className={cn(
-          'player-fullscreen',
-          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+      <>
+        {miniPlayer && (
+          <button
+            className={cn(
+              'player-fullscreen',
+              'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+            )}
+          >
+            <RiPictureInPicture2Fill />
+          </button>
         )}
-      >
-        <RiPictureInPicture2Fill />
-      </button>
+      </>
     );
   };
 
   const SpeedButton = () => {
     return (
-      <div className="relative">
-        <button
-          className={cn(
-            'player-fullscreen',
-            'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
-          )}
-        >
-          <RiSpeedUpFill />
-        </button>
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2">
-          <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">0.25x</button>
-          <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">0.5x</button>
-          <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">1x</button>
-          <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">1.5x</button>
-          <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">2x</button>
-        </div>
-      </div>
+      <>
+        {speed && (
+          <div className="relative">
+            <button
+              className={cn(
+                'player-fullscreen',
+                'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+              )}
+            >
+              <RiSpeedUpFill />
+            </button>
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2">
+              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">0.25x</button>
+              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">0.5x</button>
+              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">1x</button>
+              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">1.5x</button>
+              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">2x</button>
+            </div>
+          </div>
+        )}
+      </>
     );
   };
 

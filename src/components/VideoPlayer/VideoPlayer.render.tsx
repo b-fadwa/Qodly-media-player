@@ -19,6 +19,9 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   muted,
   loop,
   videoSource,
+  miniPlayer,
+  fullScreen,
+  speed,
   style,
   className,
   classNames = [],
@@ -247,6 +250,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     }
   };
 
+
   const togglePictureInPicture = () => {
     if (videoRef.current) {
       videoRef.current.requestPictureInPicture();
@@ -264,79 +268,91 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
 
   const FullScreenButton = () => {
     return (
-      <button
-        className={cn(
-          'player-fullscreen',
-          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+      <>
+        {fullScreen && (
+          <button
+            className={cn(
+              'player-fullscreen',
+              'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+            )}
+            onClick={toggleFullScreen}
+          >
+            <BsFullscreen />
+          </button>
         )}
-        onClick={toggleFullScreen}
-      >
-        <BsFullscreen />
-      </button>
+      </>
     );
   };
 
   const PictureInPictureButton = () => {
     return (
-      <button
-        className={cn(
-          'player-fullscreen',
-          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+      <>
+        {miniPlayer && (
+          <button
+            className={cn(
+              'player-fullscreen',
+              'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+            )}
+            onClick={togglePictureInPicture}
+          >
+            <RiPictureInPicture2Fill />
+          </button>
         )}
-        onClick={togglePictureInPicture}
-      >
-        <RiPictureInPicture2Fill />
-      </button>
+      </>
     );
   };
 
   const SpeedButton = () => {
     return (
-      <div className="relative">
-        <button
-          className={cn(
-            'player-fullscreen',
-            'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
-          )}
-          onClick={toggleDropdown}
-        >
-          <RiSpeedUpFill />
-        </button>
-        {showDropdown && (
-          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2">
+      <>
+        {speed && (
+          <div className="relative">
             <button
-              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
-              onClick={() => handleSpeedChange(0.25)}
+              className={cn(
+                'player-fullscreen',
+                'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+              )}
+              onClick={toggleDropdown}
             >
-              0.25x
+              <RiSpeedUpFill />
             </button>
-            <button
-              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
-              onClick={() => handleSpeedChange(0.5)}
-            >
-              0.5x
-            </button>
-            <button
-              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
-              onClick={() => handleSpeedChange(1)}
-            >
-              1x
-            </button>
-            <button
-              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
-              onClick={() => handleSpeedChange(1.5)}
-            >
-              1.5x
-            </button>
-            <button
-              className="block w-full py-2 px-4 text-left hover:bg-gray-300"
-              onClick={() => handleSpeedChange(2)}
-            >
-              2x
-            </button>
+            {showDropdown && (
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2">
+                <button
+                  className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+                  onClick={() => handleSpeedChange(0.25)}
+                >
+                  0.25x
+                </button>
+                <button
+                  className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+                  onClick={() => handleSpeedChange(0.5)}
+                >
+                  0.5x
+                </button>
+                <button
+                  className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+                  onClick={() => handleSpeedChange(1)}
+                >
+                  1x
+                </button>
+                <button
+                  className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+                  onClick={() => handleSpeedChange(1.5)}
+                >
+                  1.5x
+                </button>
+                <button
+                  className="block w-full py-2 px-4 text-left hover:bg-gray-300"
+                  onClick={() => handleSpeedChange(2)}
+                >
+                  2x
+                </button>
+              </div>
+            )}
           </div>
         )}
-      </div>
+      </>
     );
   };
 

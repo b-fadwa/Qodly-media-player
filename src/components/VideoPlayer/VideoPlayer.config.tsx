@@ -59,6 +59,9 @@ export default {
     autoPlay: false,
     muted: false,
     loop: false,
+    speed:false,
+    fullScreen:false,
+    miniPlayer:false
   },
 } as T4DComponentConfig<IVideoPlayerProps>;
 
@@ -67,4 +70,7 @@ export interface IVideoPlayerProps extends webforms.ComponentProps {
   muted: boolean;
   loop: boolean;
   videoSource: string;
+  fullScreen:boolean;
+  speed:boolean;
+  miniPlayer:boolean;
 }
