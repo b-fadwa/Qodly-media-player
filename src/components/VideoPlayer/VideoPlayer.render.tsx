@@ -10,6 +10,7 @@ import {
   BsFillVolumeMuteFill,
   BsFillVolumeDownFill,
   BsFullscreen,
+  BsFullscreenExit,
 } from 'react-icons/bs';
 
 import { RiPictureInPicture2Fill, RiSpeedUpFill } from 'react-icons/ri';
@@ -43,6 +44,8 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const [muteVolume, setMuteVolume] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
     if (!ds) return;
@@ -261,8 +264,16 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     }
   };
   const toggleFullScreen = () => {
-    if (videoRef.current) {
-      videoRef.current.requestFullscreen();
+    if (containerRef.current) {
+      if (!document.fullscreenElement) {
+        containerRef.current.requestFullscreen();
+        setIsFullScreen(true);
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+          setIsFullScreen(false);
+        }
+      }
     }
   };
 
@@ -292,7 +303,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
             )}
             onClick={toggleFullScreen}
           >
-            <BsFullscreen />
+            {isFullScreen ? <BsFullscreenExit /> : <BsFullscreen />}
           </button>
         )}
       </>
@@ -373,30 +384,38 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
 
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
-      <video
-        ref={videoRef}
-        autoPlay={autoPlay}
-        loop={loop}
-        muted={muted}
-        className={cn('video-screen', 'w-full bg-slate-400 rounded-t-lg')}
-        onTimeUpdate={handleTimeUpdate}
-      >
-        <source src={value} type="video/mp4" />
-        <source src={value} type="video/ogg" />
-        Your browser does not support the video element.
-      </video>
-      <div
-        className={cn('player-container', 'flex rounded-b-lg bg-gray-600 text-white text-xl px-1')}
-      >
-        <VideoPlayPauseButton />
-        <div className={cn('player-container', 'flex grow items-center justify-center gap-2 p-1')}>
-          <ProgressBar />
-          <DurationDiv />
+      <div ref={containerRef} className={cn('player-container', 'relative w-full h-full')}>
+        <video
+          ref={videoRef}
+          autoPlay={autoPlay}
+          loop={loop}
+          muted={muted}
+          className={cn('video-screen', 'w-full h-auto bg-slate-400 rounded-t-lg')}
+          onTimeUpdate={handleTimeUpdate}
+        >
+          <source src={value} type="video/mp4" />
+          <source src={value} type="video/ogg" />
+          Your browser does not support the video element.
+        </video>
+        <div
+          className={cn(
+            'video-container',
+            'w-full absolute bottom-0',
+            'flex rounded-b-lg bg-gray-600 text-white text-xl px-1',
+          )}
+        >
+          <VideoPlayPauseButton />
+          <div
+            className={cn('player-container', 'flex grow items-center justify-center gap-2 p-1')}
+          >
+            <ProgressBar />
+            <DurationDiv />
+          </div>
+          <VolumeInput />
+          <SpeedButton />
+          <FullScreenButton />
+          <PictureInPictureButton />
         </div>
-        <VolumeInput />
-        <SpeedButton />
-        <FullScreenButton />
-        <PictureInPictureButton />
       </div>
     </div>
   );
