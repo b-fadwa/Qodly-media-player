@@ -42,6 +42,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!ds) return;
@@ -142,16 +143,26 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     }
   };
 
-  const handleVolumeChange = (e: any) => {
-    //set the volume of the audio
-    // console.log('volume ' + e.target.value);
-    if (!muteVolume) {
-      setVolume(e.target.value);
+  const handleMouseDown = (event: any) => {
+    event.preventDefault();
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('click', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleMouseMove = (event: any) => {
+    if (inputRef.current) {
+      const inputRect = inputRef.current?.getBoundingClientRect();
+      const percentage = (event.clientX - inputRect.left) / inputRect.width;
+      const newVolume = Math.floor(Math.min(Math.max(percentage * 100, 0), 100));
+      setVolume(newVolume);
     }
-    if (muteVolume) {
-      // Unmute the volume when changing manually
-      setMuteVolume(false);
-    }
+  };
+
+  const handleMouseUp = () => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+    document.removeEventListener('click', handleMouseMove);
   };
 
   useEffect(() => {
@@ -221,35 +232,39 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           type="range"
           min={0}
           max={100}
-          onInput={handleVolumeChange}
-          value={volume}
+          defaultValue={volume}
+          ref={inputRef}
+          onMouseDown={handleMouseDown}
           className={isInputVisible ? 'player-volume-range pr-4' : 'player-volume-range hidden'}
         />
       </div>
     );
   };
 
-  function formatTime(videoDuration: number) {
-    if (videoDuration) {
+  const formatTime = (videoDuration: number) => {
+    if (videoDuration >= 0) {
       const hours = Math.floor(videoDuration / 3600);
       const minutes = Math.floor((videoDuration % 3600) / 60);
       const seconds = Math.floor(videoDuration % 60);
-      if (minutes === 0 && hours === 0) return `${seconds}s`;
-      if (minutes === 0 && seconds === 0) return `${hours}h`;
-      if (hours === 0) return `${minutes}min ${seconds}s`;
-      if (minutes === 0) return `${seconds}s`;
-      if (seconds === 0) return `${hours}h ${minutes}min`;
-    } else {
-      return '0s';
-    }
-  }
 
+      // Add leading zeros to ensure two-digit format
+      const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+      if (hours > 0) {
+        return `${hours}:${formattedMinutes}:${formattedSeconds}`;
+      } else {
+        return `${formattedMinutes}:${formattedSeconds}`;
+      }
+    } else {
+      return '00:00';
+    }
+  };
   const toggleFullScreen = () => {
     if (videoRef.current) {
       videoRef.current.requestFullscreen();
     }
   };
-
 
   const togglePictureInPicture = () => {
     if (videoRef.current) {
