@@ -1,6 +1,6 @@
 import { EComponentKind, T4DComponentConfig } from '@ws-ui/webform-editor';
 import { Settings } from '@ws-ui/webform-editor';
-import { MdOutlineTextSnippet } from 'react-icons/md';
+import { BsCameraVideo } from "react-icons/bs";
 
 import VideoPlayerSettings, { BasicSettings } from './VideoPlayer.settings';
 
@@ -20,7 +20,7 @@ export default {
   info: {
     displayName: 'VideoPlayer',
     exposed: true,
-    icon: MdOutlineTextSnippet,
+    icon: BsCameraVideo,
     events: [
       {
         label: 'On Click',
