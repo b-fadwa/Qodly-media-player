@@ -36,11 +36,11 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   //to set the source of the audio player
   useEffect(() => {
-    // debugger
-    // debugger
     if (!ds) return;
     const listener = async (/* event */) => {
       const v = await ds.getValue<string>();
@@ -55,6 +55,28 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
       ds.removeListener('changed', listener);
     };
   }, [ds]);
+
+  useEffect(() => {
+    const handleLoadedMetadata = () => {
+      if (audioRef.current) {
+        setCurrentTime(audioRef.current.currentTime);
+        // Update duration in state once metadata is loaded
+        if (audioRef.current.duration) {
+          setDuration(audioRef.current.duration);
+        }
+      }
+    };
+
+    if (audioRef.current) {
+      audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      }
+    };
+  }, []);
 
   //handle button click: play/pause
   const playPauseAudio = () => {
@@ -94,25 +116,31 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
     );
   };
 
-  function formatTime(audioDuration: number) {
-    if (audioDuration) {
-      // debugger
+  const formatTime = (audioDuration: number) => {
+    if (audioDuration >= 0) {
       const hours = Math.floor(audioDuration / 3600);
       const minutes = Math.floor((audioDuration % 3600) / 60);
       const seconds = Math.floor(audioDuration % 60);
-      if (minutes === 0 && hours === 0) return `${seconds}s`;
-      if (minutes === 0 && seconds === 0) return `${hours}h`;
-      if (hours === 0) return `${minutes}min ${seconds}s`;
-      if (minutes === 0) return `${seconds}s`;
-      if (seconds === 0) return `${hours}h ${minutes}min`;
+
+      // Add leading zeros to ensure two-digit format
+      const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+      if (hours > 0) {
+        return `${hours}:${formattedMinutes}:${formattedSeconds}`;
+      } else {
+        return `${formattedMinutes}:${formattedSeconds}`;
+      }
+    } else {
+      return '00:00';
     }
-  }
+  };
+
   //duration div
   const DurationDiv = () => {
     return (
       <div className={cn('duration-container', 'p-2 w-50')}>
-        {formatTime(Math.floor(currentTime))} /{' '}
-        {audioRef.current ? formatTime(audioRef.current?.duration) : '00:00'}
+          {formatTime(Math.floor(currentTime))} / {formatTime(Math.floor(duration))}
       </div>
     );
   };
@@ -123,6 +151,28 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
       setCurrentTime(newTime);
       audioRef.current.currentTime = newTime;
     }
+  };
+
+  const handleMouseDown = (event: any) => {
+    event.preventDefault();
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('click', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleMouseMove = (event: any) => {
+    if (inputRef.current) {
+      const inputRect = inputRef.current?.getBoundingClientRect();
+      const percentage = (event.clientX - inputRect.left) / inputRect.width;
+      const newVolume = Math.floor(Math.min(Math.max(percentage * 100, 0), 100));
+      setVolume(newVolume);
+    }
+  };
+
+  const handleMouseUp = () => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+    document.removeEventListener('click', handleMouseMove);
   };
 
   //progress bar
@@ -211,7 +261,9 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
           min={0}
           max={100}
           onInput={handleVolumeChange}
-          value={volume}
+          defaultValue={volume}
+          ref={inputRef}
+          onMouseDown={handleMouseDown}
           className={isInputVisible ? 'player-volume-range pr-4' : 'player-volume-range hidden'}
         />
       </div>
