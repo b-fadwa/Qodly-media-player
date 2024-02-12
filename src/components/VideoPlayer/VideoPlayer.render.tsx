@@ -35,13 +35,13 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressBarRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState<string>(videoSource);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [prevVolume, setPrevVolume] = useState<number>(60); //get the previous audio volume
-  const [volume, setVolume] = useState(60);
-  const [muteVolume, setMuteVolume] = useState(false);
+  const [volume, setVolume] = useState(muted ? 0 : 60);
+  const [muteVolume, setMuteVolume] = useState(muted);
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -63,6 +63,12 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
       ds.removeListener('changed', listener);
     };
   }, [ds]);
+
+  useEffect(() => {
+    if (volume > 0) setMuteVolume(false);
+    if (videoRef.current)
+      if (videoRef.current.currentTime === videoRef.current.duration) setIsPlaying(false);
+  });
 
   useEffect(() => {
     const handleLoadedMetadata = () => {
@@ -389,7 +395,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           ref={videoRef}
           autoPlay={autoPlay}
           loop={loop}
-          muted={muted}
+          muted={muteVolume}
           className={cn('video-screen', 'w-full h-auto bg-slate-400 rounded-t-lg')}
           onTimeUpdate={handleTimeUpdate}
         >
