@@ -31,11 +31,11 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   const progressBarRef = useRef<HTMLInputElement>(null);
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [prevVolume, setPrevVolume] = useState<number>(60); //get the previous audio volume
-
+  const [volume, setVolume] = useState(muted ? 0 : 60);
+  const [muteVolume, setMuteVolume] = useState(muted);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [volume, setVolume] = useState(60);
-  const [muteVolume, setMuteVolume] = useState(false);
+
   const [duration, setDuration] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -77,6 +77,12 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (volume > 0) setMuteVolume(false);
+    if (audioRef.current)
+      if (audioRef.current.currentTime === audioRef.current.duration) setIsPlaying(false);
+  });
 
   //handle button click: play/pause
   const playPauseAudio = () => {
@@ -276,7 +282,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
         ref={audioRef}
         autoPlay={autoPlay}
         loop={loop}
-        muted={muted}
+        muted={muteVolume}
         onTimeUpdate={handleTimeUpdate}
       >
         {/* include the types mpeg + mp4+ ogg */}
