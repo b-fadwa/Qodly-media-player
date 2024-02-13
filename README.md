@@ -4,7 +4,7 @@ This pack provides two main components, a custom audio player and a custom video
 
 ## Audio player component 
 
-![audioPlayer]https://github.com/b-fadwa/audio-player/blob/develop/public/audioPlayer.png
+![audioPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/audioPlayer.png)
 
 ### Properties
 
@@ -24,12 +24,12 @@ This pack provides two main components, a custom audio player and a custom video
 
 When customizing the appearance of the audio player, you have access to the following classes within the component:
 
-![audioPlayer]https://github.com/b-fadwa/audio-player/blob/develop/public/audioCustomCss.png
+![audioPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/audioCustomCss.png)
 
 
 ## Video player component 
 
-![videoPlayer]https://github.com/b-fadwa/audio-player/blob/develop/public/videoPlayer.png
+![videoPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/videoPlayer.png)
 
 ### Properties
 
@@ -54,4 +54,4 @@ When customizing the appearance of the audio player, you have access to the foll
 
 For the video player, you have access to the following classes within the component:
 
-![videoPlayer]https://github.com/b-fadwa/audio-player/blob/develop/public/videoCustomCss.png
+![videoPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/videoCustomCss.png)
