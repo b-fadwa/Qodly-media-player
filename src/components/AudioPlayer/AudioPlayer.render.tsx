@@ -145,7 +145,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   //duration div
   const DurationDiv = () => {
     return (
-      <div className={cn('duration-container', 'p-2 w-50')}>
+      <div className={cn('player-duration-container', 'p-2 w-50')}>
           {formatTime(Math.floor(currentTime))} / {formatTime(Math.floor(duration))}
       </div>
     );

@@ -322,7 +322,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
         {miniPlayer && (
           <button
             className={cn(
-              'player-fullscreen',
+              'player-miniPlayer',
               'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
             )}
             onClick={togglePictureInPicture}
@@ -341,7 +341,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           <div className="relative">
             <button
               className={cn(
-                'player-fullscreen',
+                'player-speed',
                 'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
               )}
               onClick={toggleDropdown}
@@ -349,7 +349,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
               <RiSpeedUpFill />
             </button>
             {showDropdown && (
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2">
+              <div className={cn('player-speed-options',"absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2")}>
                 <button
                   className="block w-full py-2 px-4 text-left hover:bg-gray-300"
                   onClick={() => handleSpeedChange(0.25)}
@@ -390,14 +390,15 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
 
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
-      <div ref={containerRef} className={cn('player-container', 'relative w-full h-full')}>
+      <div ref={containerRef} className={cn('video-player-container', 'relative w-full h-full')}>
         <video
           ref={videoRef}
           autoPlay={autoPlay}
           loop={loop}
           muted={muteVolume}
-          className={cn('video-screen', 'w-full h-auto bg-slate-400 rounded-t-lg')}
+          className={cn('video-screen', 'w-full h-auto bg-slate-400 rounded-t-lg hover:cursor-pointer')}
           onTimeUpdate={handleTimeUpdate}
+          onClick={playPauseVideo}
         >
           <source src={value} type="video/mp4" />
           <source src={value} type="video/ogg" />

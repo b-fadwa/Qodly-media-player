@@ -61,7 +61,10 @@ export default {
     loop: false,
     speed:false,
     fullScreen:false,
-    miniPlayer:false
+    miniPlayer:false,
+    style: {
+      width: '900px'
+    },
   },
 } as T4DComponentConfig<IVideoPlayerProps>;
 
