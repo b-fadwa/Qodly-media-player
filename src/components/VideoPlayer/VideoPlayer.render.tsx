@@ -349,7 +349,12 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
               <RiSpeedUpFill />
             </button>
             {showDropdown && (
-              <div className={cn('player-speed-options',"absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2")}>
+              <div
+                className={cn(
+                  'player-speed-options',
+                  'absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2',
+                )}
+              >
                 <button
                   className="block w-full py-2 px-4 text-left hover:bg-gray-300"
                   onClick={() => handleSpeedChange(0.25)}
@@ -390,13 +395,17 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
 
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
-      <div ref={containerRef} className={cn('video-player-container', 'relative w-full h-full')}>
+      <div ref={containerRef} className={cn('video-player-container', 'w-full h-full')}>
         <video
           ref={videoRef}
           autoPlay={autoPlay}
           loop={loop}
           muted={muteVolume}
-          className={cn('video-screen', 'w-full h-auto bg-slate-400 rounded-t-lg hover:cursor-pointer')}
+          className={cn(
+            'video-screen',
+            'w-full bg-slate-400 rounded-t-lg hover:cursor-pointer',
+          )}
+          style={{ height: isFullScreen ? '90%' : 'auto' }}
           onTimeUpdate={handleTimeUpdate}
           onClick={playPauseVideo}
         >
@@ -407,7 +416,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
         <div
           className={cn(
             'video-container',
-            'w-full absolute bottom-0',
+            'w-full',
             'flex rounded-b-lg bg-gray-600 text-white text-xl px-1',
           )}
         >
