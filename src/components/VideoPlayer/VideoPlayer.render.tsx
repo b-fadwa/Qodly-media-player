@@ -35,17 +35,17 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressBarRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState<string>(videoSource);
-  const [isPlaying, setIsPlaying] = useState(autoPlay);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(autoPlay);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+  const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
   const [prevVolume, setPrevVolume] = useState<number>(60); //get the previous audio volume
-  const [volume, setVolume] = useState(muted ? 0 : 60);
-  const [muteVolume, setMuteVolume] = useState(muted);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [volume, setVolume] = useState<number>(muted ? 0 : 60);
+  const [muteVolume, setMuteVolume] = useState<boolean>(muted);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
 
   useEffect(() => {
     if (!ds) return;
@@ -401,10 +401,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           autoPlay={autoPlay}
           loop={loop}
           muted={muteVolume}
-          className={cn(
-            'video-screen',
-            'w-full bg-slate-400 rounded-t-lg hover:cursor-pointer',
-          )}
+          className={cn('video-screen', 'w-full bg-slate-400 rounded-t-lg hover:cursor-pointer')}
           style={{ height: isFullScreen ? '90%' : 'auto' }}
           onTimeUpdate={handleTimeUpdate}
           onClick={playPauseVideo}

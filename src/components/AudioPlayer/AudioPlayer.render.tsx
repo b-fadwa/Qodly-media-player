@@ -29,14 +29,14 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressBarRef = useRef<HTMLInputElement>(null);
-  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
   const [prevVolume, setPrevVolume] = useState<number>(60); //get the previous audio volume
-  const [volume, setVolume] = useState(muted ? 0 : 60);
-  const [muteVolume, setMuteVolume] = useState(muted);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [volume, setVolume] = useState<number>(muted ? 0 : 60);
+  const [muteVolume, setMuteVolume] = useState<boolean>(muted);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [currentTime, setCurrentTime] = useState<number>(0);
 
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   //to set the source of the audio player
@@ -146,7 +146,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   const DurationDiv = () => {
     return (
       <div className={cn('player-duration-container', 'p-2 w-50')}>
-          {formatTime(Math.floor(currentTime))} / {formatTime(Math.floor(duration))}
+        {formatTime(Math.floor(currentTime))} / {formatTime(Math.floor(duration))}
       </div>
     );
   };
@@ -197,17 +197,6 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
         />
       </div>
     );
-  };
-
-  const handleVolumeChange = (e: any) => {
-    //set the volume of the audio
-    if (!muteVolume) {
-      setVolume(e.target.value);
-    }
-    if (muteVolume) {
-      // Unmute the volume when changing manually
-      setMuteVolume(false);
-    }
   };
 
   useEffect(() => {
@@ -266,7 +255,6 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
           type="range"
           min={0}
           max={100}
-          onInput={handleVolumeChange}
           defaultValue={volume}
           ref={inputRef}
           onMouseDown={handleMouseDown}

@@ -16,7 +16,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   const {
     connectors: { connect },
   } = useEnhancedNode();
-  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
 
   const handleMouseEnter = () => {
     setIsInputVisible(true);
