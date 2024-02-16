@@ -158,7 +158,6 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const handleMouseDown = (event: any) => {
     event.preventDefault();
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('click', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   };
 
@@ -174,7 +173,6 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const handleMouseUp = () => {
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
-    document.removeEventListener('click', handleMouseMove);
   };
 
   useEffect(() => {
@@ -247,7 +245,8 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           defaultValue={volume}
           ref={inputRef}
           onMouseDown={handleMouseDown}
-          className={isInputVisible ? 'player-volume-range' : 'player-volume-range hidden'}
+          onClick={handleMouseMove}
+          className={cn('player-volume-range mr-1', { hidden: !isInputVisible })}
         />
       </div>
     );

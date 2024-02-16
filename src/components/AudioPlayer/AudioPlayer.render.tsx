@@ -162,7 +162,6 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   const handleMouseDown = (event: any) => {
     event.preventDefault();
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('click', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   };
 
@@ -178,7 +177,6 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   const handleMouseUp = () => {
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
-    document.removeEventListener('click', handleMouseMove);
   };
 
   //progress bar
@@ -231,14 +229,14 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
       <div
         className={cn(
           'player-volume-container ',
-          'flex justify-center items-center group w-fit rounded pr-4',
+          'flex justify-center items-center group w-fit rounded',
         )}
         onMouseLeave={handleMouseLeave}
       >
         <button
           className={cn(
             'player-volume-button',
-            'cursor-pointer relative w-12 h-12 flex justify-center items-center p-2 m-1',
+            'cursor-pointer relative w-12 h-12 flex justify-center items-center p-2',
           )}
           onClick={muteUpVolume}
           onMouseEnter={handleMouseEnter}
@@ -256,9 +254,10 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
           min={0}
           max={100}
           defaultValue={volume}
+          onClick={handleMouseMove}
           ref={inputRef}
           onMouseDown={handleMouseDown}
-          className={isInputVisible ? 'player-volume-range pr-4' : 'player-volume-range hidden'}
+          className={cn('player-volume-range mr-2', { hidden: !isInputVisible })}
         />
       </div>
     );
@@ -284,7 +283,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
         className={cn('player-container', 'flex rounded bg-gray-600 text-white text-lg')}
       >
         <AudioPlayPauseButton />
-        <div className={cn('player-content', 'flex grow items-center justify-center gap-2  p-2')}>
+        <div className={cn('player-content', 'flex grow items-center justify-center gap-2 p-2')}>
           <ProgressBar />
           <DurationDiv />
         </div>
