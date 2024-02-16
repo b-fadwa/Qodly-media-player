@@ -129,7 +129,8 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           type="range"
           ref={progressBarRef}
           defaultValue={currentTime}
-          onChange={handleProgressChange}
+          onMouseDown={handleProgressMouseDown}
+          onClick={handleProgressChange}
           step="0.01"
           min="0"
           max={videoRef.current?.duration}
@@ -138,12 +139,26 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     );
   };
 
-  const handleProgressChange = () => {
+  const handleProgressChange = (event: any) => {
     if (videoRef.current && progressBarRef.current) {
-      const newTime = parseFloat(progressBarRef.current.value);
+      const inputRect = progressBarRef.current?.getBoundingClientRect();
+      const percentage = (event.clientX - inputRect.left) / inputRect.width;
+      const max = videoRef.current.duration;
+      const newTime = max * percentage;
       setCurrentTime(newTime);
       videoRef.current.currentTime = newTime;
     }
+  };
+
+  const handleProgressMouseDown = (event: any) => {
+    event.preventDefault();
+    document.addEventListener('mousemove', handleProgressChange);
+    document.addEventListener('mouseup', handleProgressMouseUp);
+  };
+
+  const handleProgressMouseUp = () => {
+    document.removeEventListener('mousemove', handleProgressChange);
+    document.removeEventListener('mouseup', handleProgressMouseUp);
   };
 
   const handleTimeUpdate = () => {

@@ -151,12 +151,26 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
     );
   };
 
-  const handleProgressChange = () => {
+  const handleProgressChange = (event: any) => {
     if (audioRef.current && progressBarRef.current) {
-      const newTime = parseFloat(progressBarRef.current.value);
+      const inputRect = progressBarRef.current?.getBoundingClientRect();
+      const percentage = (event.clientX - inputRect.left) / inputRect.width;
+      const max = audioRef.current.duration;
+      const newTime = max * percentage;
       setCurrentTime(newTime);
       audioRef.current.currentTime = newTime;
     }
+  };
+
+  const handleProgressMouseDown = (event: any) => {
+    event.preventDefault();
+    document.addEventListener('mousemove', handleProgressChange);
+    document.addEventListener('mouseup', handleProgressMouseUp);
+  };
+
+  const handleProgressMouseUp = () => {
+    document.removeEventListener('mousemove', handleProgressChange);
+    document.removeEventListener('mouseup', handleProgressMouseUp);
   };
 
   const handleMouseDown = (event: any) => {
@@ -188,7 +202,8 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
           type="range"
           ref={progressBarRef}
           defaultValue={currentTime}
-          onChange={handleProgressChange}
+          onMouseDown={handleProgressMouseDown}
+          onClick={handleProgressChange}
           step="0.01"
           min="0"
           max={audioRef.current?.duration}
