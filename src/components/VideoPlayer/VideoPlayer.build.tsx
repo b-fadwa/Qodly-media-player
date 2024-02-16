@@ -6,6 +6,7 @@ import { IVideoPlayerProps } from './VideoPlayer.config';
 import { BsFillPlayFill, BsFillVolumeUpFill, BsFullscreen } from 'react-icons/bs';
 
 import { RiPictureInPicture2Fill, RiSpeedUpFill } from 'react-icons/ri';
+import { AiOutlineFastBackward, AiOutlineFastForward } from 'react-icons/ai';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
   autoPlay,
@@ -14,6 +15,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   miniPlayer,
   fullScreen,
   speed,
+  fastBackForward,
   style,
   className,
   classNames = [],
@@ -108,7 +110,12 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
             >
               <RiSpeedUpFill />
             </button>
-            <div className={cn('player-speed-options',"absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2")}>
+            <div
+              className={cn(
+                'player-speed-options',
+                'absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2',
+              )}
+            >
               <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">0.25x</button>
               <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">0.5x</button>
               <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">1x</button>
@@ -141,12 +148,23 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           Your browser does not support the video element.
         </video>
         <div
-          className={cn(
-            'video-container',
-            'flex rounded-b-lg bg-gray-600 text-white text-xl px-1',
-          )}
+          className={cn('video-container', 'flex rounded-b-lg bg-gray-600 text-white text-xl px-1')}
         >
+          <>
+            {fastBackForward && (
+              <button>
+                <AiOutlineFastBackward />
+              </button>
+            )}
+          </>
           <VideoPlayPauseButton />
+          <>
+            {fastBackForward && (
+              <button>
+                <AiOutlineFastForward />
+              </button>
+            )}
+          </>{' '}
           <div
             className={cn('player-container', 'flex grow items-center justify-center gap-2 p-1')}
           >

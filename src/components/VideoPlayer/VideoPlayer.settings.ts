@@ -43,6 +43,12 @@ const commonSettings: TSetting[] = [
     type: ESetting.CHECKBOX,
     defaultValue: false,
   },
+  {
+    key: 'fastBackForward',
+    label: 'Fast back/forward',
+    type: ESetting.CHECKBOX,
+    defaultValue: false,
+  },
 ];
 
 const Settings: TSetting[] = [

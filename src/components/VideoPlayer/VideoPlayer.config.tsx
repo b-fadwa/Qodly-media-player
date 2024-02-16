@@ -1,6 +1,6 @@
 import { EComponentKind, T4DComponentConfig } from '@ws-ui/webform-editor';
 import { Settings } from '@ws-ui/webform-editor';
-import { BsCameraVideo } from "react-icons/bs";
+import { BsCameraVideo } from 'react-icons/bs';
 
 import VideoPlayerSettings, { BasicSettings } from './VideoPlayer.settings';
 
@@ -59,11 +59,12 @@ export default {
     autoPlay: false,
     muted: false,
     loop: false,
-    speed:false,
-    fullScreen:false,
-    miniPlayer:false,
+    speed: false,
+    fullScreen: false,
+    miniPlayer: false,
+    fastBackForward: false,
     style: {
-      width: '900px'
+      width: '900px',
     },
   },
 } as T4DComponentConfig<IVideoPlayerProps>;
@@ -73,7 +74,8 @@ export interface IVideoPlayerProps extends webforms.ComponentProps {
   muted: boolean;
   loop: boolean;
   videoSource: string;
-  fullScreen:boolean;
-  speed:boolean;
-  miniPlayer:boolean;
+  fullScreen: boolean;
+  speed: boolean;
+  miniPlayer: boolean;
+  fastBackForward: boolean;
 }
