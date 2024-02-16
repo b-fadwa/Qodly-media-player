@@ -13,6 +13,8 @@ import {
   BsFullscreenExit,
 } from 'react-icons/bs';
 
+import { AiOutlineFastBackward, AiOutlineFastForward } from 'react-icons/ai';
+
 import { RiPictureInPicture2Fill, RiSpeedUpFill } from 'react-icons/ri';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
@@ -23,6 +25,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   miniPlayer,
   fullScreen,
   speed,
+  fastBackForward,
   style,
   className,
   classNames = [],
@@ -244,7 +247,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           defaultValue={volume}
           ref={inputRef}
           onMouseDown={handleMouseDown}
-          className={isInputVisible ? 'player-volume-range pr-4' : 'player-volume-range hidden'}
+          className={isInputVisible ? 'player-volume-range' : 'player-volume-range hidden'}
         />
       </div>
     );
@@ -393,6 +396,22 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     );
   };
 
+  const fastBackward = () => {
+    if (progressBarRef.current && videoRef.current) {
+      const backProgress: number = parseFloat(progressBarRef.current?.value) - 10;
+      setCurrentTime(backProgress);
+      videoRef.current.currentTime = backProgress;
+    }
+  };
+
+  const fastForward = () => {
+    if (progressBarRef.current && videoRef.current) {
+      const backProgress: number = parseFloat(progressBarRef.current?.value) + 10;
+      setCurrentTime(backProgress);
+      videoRef.current.currentTime = backProgress;
+    }
+  };
+
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
       <div ref={containerRef} className={cn('video-player-container', 'w-full h-full')}>
@@ -420,7 +439,21 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
             'flex rounded-b-lg bg-gray-600 text-white text-xl px-1',
           )}
         >
+          <>
+            {fastBackForward && (
+              <button onClick={fastBackward}>
+                <AiOutlineFastBackward />
+              </button>
+            )}
+          </>
           <VideoPlayPauseButton />
+          <>
+            {fastBackForward && (
+              <button onClick={fastForward}>
+                <AiOutlineFastForward />
+              </button>
+            )}
+          </>
           <div
             className={cn('player-container', 'flex grow items-center justify-center gap-2 p-1')}
           >
