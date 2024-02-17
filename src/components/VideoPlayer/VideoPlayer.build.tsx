@@ -30,7 +30,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
       <button
         className={cn(
           'player-start',
-          'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+          'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
         )}
       >
         {' '}
@@ -53,7 +53,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
         <button
           className={cn(
             'player-volume-button',
-            'items-center justify-center p-2 hover:bg-gray-400 block cursor-pointer relative',
+            'items-center justify-center p-2 block cursor-pointer relative',
           )}
         >
           <BsFillVolumeUpFill />
@@ -70,7 +70,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           <button
             className={cn(
               'player-fullscreen',
-              'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+              'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
             )}
           >
             <BsFullscreen />
@@ -87,7 +87,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           <button
             className={cn(
               'player-miniPlayer',
-              'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+              'p-2 my-1 rounded-full  flex justify-center items-center w-12 h-12',
             )}
           >
             <RiPictureInPicture2Fill />
@@ -105,7 +105,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
             <button
               className={cn(
                 'player-speed',
-                'p-2 my-1 rounded-full hover:bg-gray-400 flex justify-center items-center w-12 h-12',
+                'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
               )}
             >
               <RiSpeedUpFill />
@@ -113,14 +113,16 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
             <div
               className={cn(
                 'player-speed-options',
-                'absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 opacity-50 bg-black rounded shadow mb-2',
+                'absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 text-white rounded shadow mb-2',
               )}
             >
-              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">0.25x</button>
-              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">0.5x</button>
-              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">1x</button>
-              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">1.5x</button>
-              <button className="block w-full py-2 px-4 text-left hover:bg-gray-300">2x</button>
+              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">
+                0.25x
+              </button>
+              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">0.5x</button>
+              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">1x</button>
+              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">1.5x</button>
+              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">2x</button>
             </div>
           </div>
         )}
@@ -141,14 +143,18 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           autoPlay={autoPlay}
           loop={loop}
           muted={muted}
-          className={cn('video-screen', 'w-full bg-slate-400 rounded-t-lg')}
+          className={cn('video-screen', 'w-full bg-black rounded-t-lg')}
         >
           <source src="" type="video/mp4" />
           <source src="" type="video/ogg" />
           Your browser does not support the video element.
         </video>
         <div
-          className={cn('video-container', 'flex rounded-b-lg bg-gray-600 text-white text-xl px-1')}
+          className={cn(
+            'video-container',
+            'w-full absolute bottom-0 left-0 right-0',
+            'flex rounded-b-lg bg-transparent text-white text-xl px-1',
+          )}
         >
           <>
             {fastBackForward && (
