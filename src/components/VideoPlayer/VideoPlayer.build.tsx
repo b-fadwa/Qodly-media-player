@@ -143,7 +143,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           autoPlay={autoPlay}
           loop={loop}
           muted={muted}
-          className={cn('video-screen', 'w-full bg-black rounded-t-lg')}
+          className={cn('video-screen', 'w-full bg-black rounded-lg')}
         >
           <source src="" type="video/mp4" />
           <source src="" type="video/ogg" />
@@ -153,7 +153,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           className={cn(
             'video-container',
             'w-full absolute bottom-0 left-0 right-0',
-            'flex rounded-b-lg bg-transparent text-white text-xl px-1',
+            'flex bg-transparent text-white text-xl px-1',
           )}
         >
           <>

@@ -49,6 +49,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if (!ds) return;
@@ -72,6 +73,26 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     if (videoRef.current)
       if (videoRef.current.currentTime === videoRef.current.duration) setIsPlaying(false);
   });
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    const handleMouseMove = () => {
+      setIsVisible(true);
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 3000); // 3 seconds
+    };
+    if (containerRef.current) {
+      containerRef.current.addEventListener('mousemove', handleMouseMove);
+    }
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleLoadedMetadata = () => {
@@ -434,7 +455,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           autoPlay={autoPlay}
           loop={loop}
           muted={muteVolume}
-          className={cn('video-screen', 'w-full h-full bg-black rounded-t-lg hover:cursor-pointer')}
+          className={cn('video-screen', 'w-full h-full bg-black rounded-lg hover:cursor-pointer')}
           onTimeUpdate={handleTimeUpdate}
           onClick={playPauseVideo}
         >
@@ -446,7 +467,10 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           className={cn(
             'video-container',
             'w-full absolute bottom-0 left-0 right-0',
-            'flex rounded-b-lg bg-transparent text-white text-xl px-1',
+            'flex bg-transparent text-white text-xl px-1',
+            'transition-opacity duration-500',
+            { 'opacity-0': !isVisible },
+            { 'opacity-100': !isPlaying },
           )}
         >
           <>
