@@ -402,7 +402,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
               <div
                 className={cn(
                   'player-speed-options',
-                  'absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 text-white rounded shadow mb-2',
+                  'absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 text-black rounded shadow mb-2 bg-white',
                 )}
               >
                 <button

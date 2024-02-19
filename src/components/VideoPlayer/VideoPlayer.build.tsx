@@ -113,12 +113,10 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
             <div
               className={cn(
                 'player-speed-options',
-                'absolute bottom-full left-1/2 transform -translate-x-1/2  z-10 text-white rounded shadow mb-2',
+                'absolute bottom-full left-1/2 transform -translate-x-1/2 z-10 text-black rounded shadow mb-2 bg-white',
               )}
             >
-              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">
-                0.25x
-              </button>
+              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">0.25x</button>
               <button className="block w-full py-2 px-4 text-left hover:text-gray-300">0.5x</button>
               <button className="block w-full py-2 px-4 text-left hover:text-gray-300">1x</button>
               <button className="block w-full py-2 px-4 text-left hover:text-gray-300">1.5x</button>
