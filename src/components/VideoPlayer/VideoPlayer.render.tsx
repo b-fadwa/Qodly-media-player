@@ -72,6 +72,8 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     if (volume > 0) setMuteVolume(false);
     if (videoRef.current)
       if (videoRef.current.currentTime === videoRef.current.duration) setIsPlaying(false);
+    if (videoRef.current)
+      if ((videoRef.current.currentTime === videoRef.current.duration) && loop) setIsPlaying(true);
   });
 
   useEffect(() => {
