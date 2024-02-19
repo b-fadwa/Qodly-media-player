@@ -354,6 +354,18 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     );
   };
 
+  const handleFullScreenChange = () => {
+    setIsFullScreen(!!document.fullscreenElement);
+  };
+
+  useEffect(() => {
+    document.addEventListener('fullscreenchange', handleFullScreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullScreenChange);
+    };
+  }, []);
+
   const PictureInPictureButton = () => {
     return (
       <>
