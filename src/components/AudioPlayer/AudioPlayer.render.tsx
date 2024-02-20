@@ -35,7 +35,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   const [prevVolume, setPrevVolume] = useState<number>(60); //get the previous audio volume
   const [volume, setVolume] = useState<number>(muted ? 0 : 60);
   const [muteVolume, setMuteVolume] = useState<boolean>(muted);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(autoPlay);
   const [currentTime, setCurrentTime] = useState<number>(0);
 
   const [duration, setDuration] = useState<number>(0);
@@ -47,9 +47,6 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
     const listener = async (/* event */) => {
       const v = await ds.getValue<string>();
       setValue(v || audioSource);
-      if (autoPlay)
-        //in case autoplay is checked, display the pause button :)
-        setIsPlaying(true);
     };
     listener();
     ds.addListener('changed', listener);
