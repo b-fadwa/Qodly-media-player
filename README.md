@@ -13,18 +13,19 @@ This pack provides two main components, a custom audio player and a custom video
 | Loop       | boolean      |false     | if set to true, then the audio will loop or repeat playback once it reaches the end. |
 | Muted       | boolean      |false     | if set to true, then the audio sound will be muted by default. |
 | Autoplay      | boolean      |false     | if set to true, then the audio will automatically play at tha page opening.  |
+| Fast back/forward    | boolean      |false     | if set to true, then two rewinding buttons will appear, thus the audio can be rewinded either forward or backwards by 10s.|
 | Audio source      | string     |""     | if provided, then the audio will play the given url.|
 
 
 | Name       | Type          | Required   | Description                                       |
 | ---------- | ---------------- |--------------------- |-------------------------------------------------|
-| datasource       |string      |No     | Will contain the audio link|
+| datasource       |string      |Yes     | Will contain the audio link|
 
 ### Custom css
 
 When customizing the appearance of the audio player, you have access to the following classes within the component:
 
-![audioPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/audioCustomCss.png)
+![audioPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/customAudio.png)
 
 
 ## Video player component 
@@ -40,6 +41,7 @@ When customizing the appearance of the audio player, you have access to the foll
 | Autoplay      | boolean      |false     | if set to true, then the video will start playing automatically when the page is loaded without any interruptions.|
 | Mini Player      | boolean      |false     | if set to true, then the video player can be minimized to a smaller size while still playing the video content. |
 | Full screen    | boolean      |false     | if set to true, then the video will go into full screen mode, and it will occupy the entire screen.|
+| Fast back/forward    | boolean      |false     | if set to true, then two rewinding buttons will appear, thus the video can be rewinded either forward or backwards by 10s.|
 | Video source      | string     |""     | if provided, then the video will play the provided link |
 
 
@@ -47,11 +49,11 @@ When customizing the appearance of the audio player, you have access to the foll
 
 | Name       | Type          | Required   | Description                                       |
 | ---------- | ---------------- |--------------------- |-------------------------------------------------|
-| datasource       |string      |No     | Will contain the video link|
+| datasource       |string      |Yes     | Will contain the video link|
 
 
 ### Custom CSS
 
 For the video player, you have access to the following classes within the component:
 
-![videoPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/videoCustomCss.png)
+![videoPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/customVideo.png)
