@@ -26,7 +26,14 @@ const commonSettings: TSetting[] = [
     label: 'Audio source',
     type: ESetting.TEXT_FIELD,
     defaultValue: "",
-  }
+  },
+  {
+    key: 'fastBackForward',
+    label: 'Fast back/forward',
+    type: ESetting.CHECKBOX,
+    defaultValue: false,
+  },
+  
 ];
 
 const Settings: TSetting[] = [

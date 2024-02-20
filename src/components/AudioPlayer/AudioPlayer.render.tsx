@@ -11,6 +11,7 @@ import {
   BsFillVolumeDownFill,
   BsFillVolumeUpFill,
 } from 'react-icons/bs';
+import { TbRewindBackward10, TbRewindForward10 } from 'react-icons/tb';
 
 const AudioPlayer: FC<IAudioPlayerProps> = ({
   autoPlay,
@@ -18,6 +19,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   loop,
   audioSource,
   style,
+  fastBackForward,
   className,
   classNames = [],
 }) => {
@@ -82,6 +84,8 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
     if (volume > 0) setMuteVolume(false);
     if (audioRef.current)
       if (audioRef.current.currentTime === audioRef.current.duration) setIsPlaying(false);
+    if (audioRef.current)
+      if (audioRef.current.currentTime === audioRef.current.duration && loop) setIsPlaying(true);
   });
 
   //handle button click: play/pause
@@ -278,6 +282,22 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
     );
   };
 
+  const fastBackward = () => {
+    if (progressBarRef.current && audioRef.current) {
+      const backProgress: number = parseFloat(progressBarRef.current?.value) - 10;
+      setCurrentTime(backProgress);
+      audioRef.current.currentTime = backProgress;
+    }
+  };
+
+  const fastForward = () => {
+    if (progressBarRef.current && audioRef.current) {
+      const backProgress: number = parseFloat(progressBarRef.current?.value) + 10;
+      setCurrentTime(backProgress);
+      audioRef.current.currentTime = backProgress;
+    }
+  };
+
   return (
     <div ref={connect} className={cn(className, classNames)}>
       <audio
@@ -297,7 +317,33 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
         style={style}
         className={cn('player-container', 'flex rounded bg-gray-600 text-white text-lg')}
       >
+        <>
+          {fastBackForward && (
+            <button
+              className={cn(
+                'player-fast',
+                'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+              )}
+              onClick={fastBackward}
+            >
+              <TbRewindBackward10 />
+            </button>
+          )}
+        </>
         <AudioPlayPauseButton />
+        <>
+          {fastBackForward && (
+            <button
+              className={cn(
+                'player-fast',
+                'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+              )}
+              onClick={fastForward}
+            >
+              <TbRewindForward10 />
+            </button>
+          )}
+        </>
         <div className={cn('player-content', 'flex grow items-center justify-center gap-2 p-2')}>
           <ProgressBar />
           <DurationDiv />

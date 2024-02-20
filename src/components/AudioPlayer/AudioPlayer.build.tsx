@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 
 import { IAudioPlayerProps } from './AudioPlayer.config';
 import { BsFillPlayFill, BsFillVolumeUpFill } from 'react-icons/bs';
+import { TbRewindBackward10, TbRewindForward10 } from 'react-icons/tb';
 
 const AudioPlayer: FC<IAudioPlayerProps> = ({
   autoPlay,
@@ -11,6 +12,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
   muted,
   style,
   className,
+  fastBackForward,
   classNames = [],
 }) => {
   const {
@@ -90,7 +92,27 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
         style={style}
         className={cn('player-container', 'flex rounded bg-gray-600 text-white text-xl')}
       >
-        <AudioPlayPauseButton />
+         <>
+            {fastBackForward && (
+              <button className={cn(
+                'player-fast',
+                'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+              )}>
+                <TbRewindBackward10 />
+              </button>
+            )}
+          </>
+          <AudioPlayPauseButton />
+          <>
+            {fastBackForward && (
+              <button className={cn(
+                'player-fast',
+                'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+              )}>
+                <TbRewindForward10 />
+              </button>
+            )}
+          </>
         <div className={cn('player-container', 'flex grow items-center justify-center gap-2 p-2')}>
           <ProgressBar />
           <DurationDiv />

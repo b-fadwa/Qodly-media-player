@@ -1,6 +1,6 @@
 import { EComponentKind, T4DComponentConfig } from '@ws-ui/webform-editor';
 import { Settings } from '@ws-ui/webform-editor';
-import { BsSoundwave } from "react-icons/bs";
+import { BsSoundwave } from 'react-icons/bs';
 
 import AudioPlayerSettings, { BasicSettings } from './AudioPlayer.settings';
 
@@ -56,16 +56,17 @@ export default {
     },
   },
   defaultProps: {
-    loop:false,
-    muted:false,
-    autoPlay:false,
+    loop: false,
+    muted: false,
+    autoPlay: false,
+    fastBackForward:false,
   },
 } as T4DComponentConfig<IAudioPlayerProps>;
 
 export interface IAudioPlayerProps extends webforms.ComponentProps {
-autoPlay:boolean,
-muted:boolean,
-loop:boolean,
-audioSource:string
-
+  autoPlay: boolean;
+  muted: boolean;
+  loop: boolean;
+  audioSource: string;
+  fastBackForward: boolean;
 }
