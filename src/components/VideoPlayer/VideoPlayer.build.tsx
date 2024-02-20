@@ -6,7 +6,7 @@ import { IVideoPlayerProps } from './VideoPlayer.config';
 import { BsFillPlayFill, BsFillVolumeUpFill, BsFullscreen } from 'react-icons/bs';
 
 import { RiPictureInPicture2Fill, RiSpeedUpFill } from 'react-icons/ri';
-import { AiOutlineFastBackward, AiOutlineFastForward } from 'react-icons/ai';
+import { TbRewindBackward10, TbRewindForward10 } from 'react-icons/tb';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
   autoPlay,
@@ -116,7 +116,9 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
                 'absolute bottom-full left-1/2 transform -translate-x-1/2 z-10 text-black rounded shadow mb-2 bg-white',
               )}
             >
-              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">0.25x</button>
+              <button className="block w-full py-2 px-4 text-left hover:text-gray-300">
+                0.25x
+              </button>
               <button className="block w-full py-2 px-4 text-left hover:text-gray-300">0.5x</button>
               <button className="block w-full py-2 px-4 text-left hover:text-gray-300">1x</button>
               <button className="block w-full py-2 px-4 text-left hover:text-gray-300">1.5x</button>
@@ -156,16 +158,26 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
         >
           <>
             {fastBackForward && (
-              <button>
-                <AiOutlineFastBackward />
+              <button
+                className={cn(
+                  'player-fast',
+                  'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+                )}
+              >
+                <TbRewindBackward10 />
               </button>
             )}
           </>
           <VideoPlayPauseButton />
           <>
             {fastBackForward && (
-              <button>
-                <AiOutlineFastForward />
+              <button
+                className={cn(
+                  'player-fast',
+                  'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+                )}
+              >
+                <TbRewindForward10 />
               </button>
             )}
           </>{' '}

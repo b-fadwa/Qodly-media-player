@@ -13,8 +13,7 @@ import {
   BsFullscreenExit,
 } from 'react-icons/bs';
 
-import { AiOutlineFastBackward, AiOutlineFastForward } from 'react-icons/ai';
-
+import { TbRewindBackward10, TbRewindForward10 } from 'react-icons/tb';
 import { RiPictureInPicture2Fill, RiSpeedUpFill } from 'react-icons/ri';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
@@ -73,7 +72,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     if (videoRef.current)
       if (videoRef.current.currentTime === videoRef.current.duration) setIsPlaying(false);
     if (videoRef.current)
-      if ((videoRef.current.currentTime === videoRef.current.duration) && loop) setIsPlaying(true);
+      if (videoRef.current.currentTime === videoRef.current.duration && loop) setIsPlaying(true);
   });
 
   useEffect(() => {
@@ -489,16 +488,28 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
         >
           <>
             {fastBackForward && (
-              <button onClick={fastBackward}>
-                <AiOutlineFastBackward />
+              <button
+                onClick={fastBackward}
+                className={cn(
+                  'player-fast',
+                  'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+                )}
+              >
+                <TbRewindBackward10 />
               </button>
             )}
           </>
           <VideoPlayPauseButton />
           <>
             {fastBackForward && (
-              <button onClick={fastForward}>
-                <AiOutlineFastForward />
+              <button
+                onClick={fastForward}
+                className={cn(
+                  'player-fast',
+                  'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+                )}
+              >
+                <TbRewindForward10 />
               </button>
             )}
           </>

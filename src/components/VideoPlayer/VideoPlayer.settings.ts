@@ -33,7 +33,7 @@ const commonSettings: TSetting[] = [
     defaultValue: false,
   },  {
     key: 'miniPlayer',
-    label: 'Miniplayer mode',
+    label: 'Picture in picture mode',
     type: ESetting.CHECKBOX,
     defaultValue: false,
   },
