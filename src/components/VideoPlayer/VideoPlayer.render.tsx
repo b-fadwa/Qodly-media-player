@@ -492,7 +492,21 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
       document.removeEventListener('keydown', onArrowKeys);
     };
   });
- 
+
+  //event added to manage the video enter/exit or the video on F click
+  const onFPress = (event: any) => {
+    if (event.key === 'F') {
+      toggleFullScreen();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onFPress);
+    return () => {
+      document.removeEventListener('keydown', onFPress);
+    };
+  });
+
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
       <div ref={containerRef} className={cn('video-player-container', 'w-full h-full relative')}>
