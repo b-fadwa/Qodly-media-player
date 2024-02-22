@@ -16,6 +16,8 @@ This pack provides two main components, a custom audio player and a custom video
 | Fast back/forward | boolean | false   | if set to true, then two rewinding buttons will appear, thus the audio can be rewinded either forward or backwards by 10s. |
 | Audio source      | string  | ""      | if provided, then the audio will play the given url.                                                                       |
 
+### Datasource
+
 | Name       | Type   | Required | Description                 |
 | ---------- | ------ | -------- | --------------------------- |
 | datasource | string | Yes      | Will contain the audio link |
@@ -112,3 +114,13 @@ self .player-fast {
   background-color: gray;
 }
 ```
+
+### Video player shortcuts
+
+| Shortcut name     | Role |                                                                                                     
+| ----------------- | ---- | 
+| Spacebar          | Play/pause the video| 
+| F                 | Enter/exit full screen mode|   
+| M                 | Mute/unmute the video|   
+| Arrow keys        | Forward or rewind the video by 10 seconds|   
+| Escape            | Quit fullscreen mode|
