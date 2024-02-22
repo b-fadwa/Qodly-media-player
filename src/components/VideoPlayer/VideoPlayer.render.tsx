@@ -507,6 +507,20 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     };
   });
 
+  //event added to manage the video mute/unmute or the video on M click
+  const onMPress = (event: any) => {
+    if (event.key === 'M') {
+      muteUpVolume();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onMPress);
+    return () => {
+      document.removeEventListener('keydown', onMPress);
+    };
+  });
+
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
       <div ref={containerRef} className={cn('video-player-container', 'w-full h-full relative')}>
