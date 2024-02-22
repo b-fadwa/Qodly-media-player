@@ -464,8 +464,8 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const onSpaceClick = (event: any) => {
     if (event.key === ' ') {
       playPauseVideo();
-     }
-  }; 
+    }
+  };
 
   useEffect(() => {
     document.addEventListener('keydown', onSpaceClick);
@@ -474,6 +474,25 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     };
   });
 
+  //event added to manage the video rewinding in function of the arrow keys
+  const onArrowKeys = (event: any) => {
+    //left arrow <-
+    if (event.key === 'ArrowLeft') {
+      fastBackward();
+    }
+    //right arrow ->
+    if (event.key === 'ArrowRight') {
+      fastForward();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onArrowKeys);
+    return () => {
+      document.removeEventListener('keydown', onArrowKeys);
+    };
+  });
+ 
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
       <div ref={containerRef} className={cn('video-player-container', 'w-full h-full relative')}>
