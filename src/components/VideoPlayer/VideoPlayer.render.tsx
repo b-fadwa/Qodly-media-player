@@ -460,6 +460,20 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
     }
   };
 
+  //event added to manage the video playing or pausing in function of the space bar press
+  const onSpaceClick = (event: any) => {
+    if (event.key === ' ') {
+      playPauseVideo();
+     }
+  }; 
+
+  useEffect(() => {
+    document.addEventListener('keydown', onSpaceClick);
+    return () => {
+      document.removeEventListener('keydown', onSpaceClick);
+    };
+  });
+
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
       <div ref={containerRef} className={cn('video-player-container', 'w-full h-full relative')}>
