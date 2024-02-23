@@ -295,6 +295,39 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
     }
   };
 
+  //event added to manage the audio playing or pausing in function of the space bar press
+  const onSpaceClick = (event: any) => {
+    if (event.key === ' ') {
+      playPauseAudio();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onSpaceClick);
+    return () => {
+      document.removeEventListener('keydown', onSpaceClick);
+    };
+  });
+
+    //event added to manage the audio rewinding in function of the arrow keys
+    const onArrowKeys = (event: any) => {
+      //left arrow <-
+      if (event.key === 'ArrowLeft') {
+        fastBackward();
+      }
+      //right arrow ->
+      if (event.key === 'ArrowRight') {
+        fastForward();
+      }
+    };
+  
+    useEffect(() => {
+      document.addEventListener('keydown', onArrowKeys);
+      return () => {
+        document.removeEventListener('keydown', onArrowKeys);
+      };
+    });
+
   return (
     <div ref={connect} className={cn(className, classNames)}>
       <audio
