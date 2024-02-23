@@ -57,6 +57,13 @@ self .player-volume-button {
 }
 ```
 
+### Audio player shortcuts
+
+| Shortcut name     | Role |                                                                                                     
+| ----------------- | ---- | 
+| Spacebar          | Play/pause the audio|
+| Arrow keys        | Forward or rewind the audio by 10 seconds|   
+
 ## Video player component
 
 ![videoPlayer](https://github.com/b-fadwa/audio-player/blob/develop/public/videoPlayer.png)
