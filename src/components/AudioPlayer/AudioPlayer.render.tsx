@@ -12,6 +12,7 @@ import {
   BsFillVolumeUpFill,
 } from 'react-icons/bs';
 import { TbRewindBackward10, TbRewindForward10 } from 'react-icons/tb';
+import { CgDanger } from 'react-icons/cg';
 
 const AudioPlayer: FC<IAudioPlayerProps> = ({
   autoPlay,
@@ -309,78 +310,89 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
     };
   });
 
-    //event added to manage the audio rewinding in function of the arrow keys
-    const onArrowKeys = (event: any) => {
-      //left arrow <-
-      if (event.key === 'ArrowLeft') {
-        fastBackward();
-      }
-      //right arrow ->
-      if (event.key === 'ArrowRight') {
-        fastForward();
-      }
+  //event added to manage the audio rewinding in function of the arrow keys
+  const onArrowKeys = (event: any) => {
+    //left arrow <-
+    if (event.key === 'ArrowLeft') {
+      fastBackward();
+    }
+    //right arrow ->
+    if (event.key === 'ArrowRight') {
+      fastForward();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onArrowKeys);
+    return () => {
+      document.removeEventListener('keydown', onArrowKeys);
     };
-  
-    useEffect(() => {
-      document.addEventListener('keydown', onArrowKeys);
-      return () => {
-        document.removeEventListener('keydown', onArrowKeys);
-      };
-    });
+  });
 
   return (
-    <div ref={connect} className={cn(className, classNames)}>
-      <audio
-        ref={audioRef}
-        autoPlay={autoPlay}
-        loop={loop}
-        muted={muteVolume}
-        onTimeUpdate={handleTimeUpdate}
-      >
-        {/* include the types mpeg + mp4+ ogg */}
-        <source src={value} type="audio/wav"></source>
-        <source src={value} type="audio/mp4"></source>
-        <source src={value} type="audio/ogg"></source>
-        Your browser does not support the audio element.
-      </audio>
-      <div
-        style={style}
-        className={cn('player-container', 'flex rounded bg-gray-600 text-white text-lg')}
-      >
-        <>
-          {fastBackForward && (
-            <button
-              className={cn(
-                'player-fast',
-                'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+    <>
+      {ds?.initialValue !== undefined && audioSource !== '' ? (
+        <div ref={connect} className={cn(className, classNames)}>
+          <audio
+            ref={audioRef}
+            autoPlay={autoPlay}
+            loop={loop}
+            muted={muteVolume}
+            onTimeUpdate={handleTimeUpdate}
+          >
+            {/* include the types mpeg + mp4+ ogg */}
+            <source src={value} type="audio/wav"></source>
+            <source src={value} type="audio/mp4"></source>
+            <source src={value} type="audio/ogg"></source>
+            Your browser does not support the audio element.
+          </audio>
+          <div
+            style={style}
+            className={cn('player-container', 'flex rounded bg-gray-600 text-white text-lg')}
+          >
+            <>
+              {fastBackForward && (
+                <button
+                  className={cn(
+                    'player-fast',
+                    'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+                  )}
+                  onClick={fastBackward}
+                >
+                  <TbRewindBackward10 />
+                </button>
               )}
-              onClick={fastBackward}
-            >
-              <TbRewindBackward10 />
-            </button>
-          )}
-        </>
-        <AudioPlayPauseButton />
-        <>
-          {fastBackForward && (
-            <button
-              className={cn(
-                'player-fast',
-                'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+            </>
+            <AudioPlayPauseButton />
+            <>
+              {fastBackForward && (
+                <button
+                  className={cn(
+                    'player-fast',
+                    'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+                  )}
+                  onClick={fastForward}
+                >
+                  <TbRewindForward10 />
+                </button>
               )}
-              onClick={fastForward}
+            </>
+            <div
+              className={cn('player-content', 'flex grow items-center justify-center gap-2 p-2')}
             >
-              <TbRewindForward10 />
-            </button>
-          )}
-        </>
-        <div className={cn('player-content', 'flex grow items-center justify-center gap-2 p-2')}>
-          <ProgressBar />
-          <DurationDiv />
+              <ProgressBar />
+              <DurationDiv />
+            </div>
+            <VolumeInput />
+          </div>
         </div>
-        <VolumeInput />
-      </div>
-    </div>
+      ) : (
+        <div className="flex h-24 w-2/5 flex-col items-center justify-center rounded-lg border bg-purple-400 text-white">
+          <CgDanger className="mb-1 h-8 w-8" />
+          <p>Missing a datasource</p>
+        </div>
+      )}
+    </>
   );
 };
 
