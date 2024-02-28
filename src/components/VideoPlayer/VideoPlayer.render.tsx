@@ -15,7 +15,6 @@ import {
 
 import { TbRewindBackward10, TbRewindForward10 } from 'react-icons/tb';
 import { RiPictureInPicture2Fill, RiSpeedUpFill } from 'react-icons/ri';
-import { CgDanger } from 'react-icons/cg';
 
 const VideoPlayer: FC<IVideoPlayerProps> = ({
   autoPlay,
@@ -524,89 +523,71 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   });
 
   return (
-    <>
-      {(ds?.initialValue !== undefined ) || (videoSource !=="")? (
-        <div ref={connect} style={style} className={cn(className, classNames)}>
-          <div
-            ref={containerRef}
-            className={cn('video-player-container', 'w-full h-full relative')}
-          >
-            <video
-              ref={videoRef}
-              autoPlay={autoPlay}
-              loop={loop}
-              muted={muteVolume}
-              className={cn(
-                'video-screen',
-                'w-full h-full bg-black rounded-lg hover:cursor-pointer',
-              )}
-              onTimeUpdate={handleTimeUpdate}
-              onClick={playPauseVideo}
-            >
-              <source src={value} type="video/mp4" />
-              <source src={value} type="video/ogg" />
-              Your browser does not support the video element.
-            </video>
-            <div
-              className={cn(
-                'video-container',
-                'w-full absolute bottom-0 left-0 right-0',
-                'flex bg-transparent text-white text-xl px-1',
-                'transition-opacity duration-500',
-                { 'opacity-0': !isVisible },
-                { 'opacity-100': !isPlaying },
-              )}
-            >
-              <>
-                {fastBackForward && (
-                  <button
-                    onClick={fastBackward}
-                    className={cn(
-                      'player-fast',
-                      'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
-                    )}
-                  >
-                    <TbRewindBackward10 />
-                  </button>
-                )}
-              </>
-              <VideoPlayPauseButton />
-              <>
-                {fastBackForward && (
-                  <button
-                    onClick={fastForward}
-                    className={cn(
-                      'player-fast',
-                      'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
-                    )}
-                  >
-                    <TbRewindForward10 />
-                  </button>
-                )}
-              </>
-              <div
+    <div ref={connect} style={style} className={cn(className, classNames)}>
+      <div ref={containerRef} className={cn('video-player-container', 'w-full h-full relative')}>
+        <video
+          ref={videoRef}
+          autoPlay={autoPlay}
+          loop={loop}
+          muted={muteVolume}
+          className={cn('video-screen', 'w-full h-full bg-black rounded-lg hover:cursor-pointer')}
+          onTimeUpdate={handleTimeUpdate}
+          onClick={playPauseVideo}
+        >
+          <source src={value} type="video/mp4" />
+          <source src={value} type="video/ogg" />
+          Your browser does not support the video element.
+        </video>
+        <div
+          className={cn(
+            'video-container',
+            'w-full absolute bottom-0 left-0 right-0',
+            'flex bg-transparent text-white text-xl px-1',
+            'transition-opacity duration-500',
+            { 'opacity-0': !isVisible },
+            { 'opacity-100': !isPlaying },
+          )}
+        >
+          <>
+            {fastBackForward && (
+              <button
+                onClick={fastBackward}
                 className={cn(
-                  'player-container',
-                  'flex grow items-center justify-center gap-2 p-1',
+                  'player-fast',
+                  'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
                 )}
               >
-                <ProgressBar />
-                <DurationDiv />
-              </div>
-              <VolumeInput />
-              <SpeedButton />
-              <FullScreenButton />
-              <PictureInPictureButton />
-            </div>
+                <TbRewindBackward10 />
+              </button>
+            )}
+          </>
+          <VideoPlayPauseButton />
+          <>
+            {fastBackForward && (
+              <button
+                onClick={fastForward}
+                className={cn(
+                  'player-fast',
+                  'p-2 my-1 rounded-full flex justify-center items-center w-12 h-12',
+                )}
+              >
+                <TbRewindForward10 />
+              </button>
+            )}
+          </>
+          <div
+            className={cn('player-container', 'flex grow items-center justify-center gap-2 p-1')}
+          >
+            <ProgressBar />
+            <DurationDiv />
           </div>
+          <VolumeInput />
+          <SpeedButton />
+          <FullScreenButton />
+          <PictureInPictureButton />
         </div>
-      ) : (
-        <div className="flex h-96 w-2/5 flex-col items-center justify-center rounded-lg border bg-purple-400 text-white">
-          <CgDanger className="mb-1 h-8 w-8" />
-          <p>Missing a datasource</p>
-        </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 };
 
