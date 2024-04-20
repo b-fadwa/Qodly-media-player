@@ -57,7 +57,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
         onMouseLeave={handleMouseLeave}
         className={cn(
           'player-volume-container ',
-          'flex justify-center items-center group w-fit rounded pr-4',
+          'flex justify-center items-center w-fit rounded pr-4',
         )}
       >
         <button
@@ -73,7 +73,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({
           type="range"
           min={0}
           max={100}
-          className={isInputVisible ? 'player-volume-range pr-4' : 'player-volume-range hidden'}
+          className={cn('player-volume-range mr-2', { hidden: !isInputVisible })}
         />
       </div>
     );

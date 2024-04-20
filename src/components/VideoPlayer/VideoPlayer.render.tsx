@@ -51,6 +51,7 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
+    // debugger
     if (!ds) return;
 
     const listener = async (/* event */) => {
@@ -459,6 +460,67 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
       videoRef.current.currentTime = backProgress;
     }
   };
+
+  //event added to manage the video playing or pausing in function of the space bar press
+  const onSpaceClick = (event: any) => {
+    if (event.key === ' ') {
+      playPauseVideo();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onSpaceClick);
+    return () => {
+      document.removeEventListener('keydown', onSpaceClick);
+    };
+  });
+
+  //event added to manage the video rewinding in function of the arrow keys
+  const onArrowKeys = (event: any) => {
+    //left arrow <-
+    if (event.key === 'ArrowLeft') {
+      fastBackward();
+    }
+    //right arrow ->
+    if (event.key === 'ArrowRight') {
+      fastForward();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onArrowKeys);
+    return () => {
+      document.removeEventListener('keydown', onArrowKeys);
+    };
+  });
+
+  //event added to manage the video enter/exit or the video on F click
+  const onFPress = (event: any) => {
+    if (event.key === 'F') {
+      toggleFullScreen();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onFPress);
+    return () => {
+      document.removeEventListener('keydown', onFPress);
+    };
+  });
+
+  //event added to manage the video mute/unmute or the video on M click
+  const onMPress = (event: any) => {
+    if (event.key === 'M') {
+      muteUpVolume();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onMPress);
+    return () => {
+      document.removeEventListener('keydown', onMPress);
+    };
+  });
 
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
